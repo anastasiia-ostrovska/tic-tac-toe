@@ -1,0 +1,2 @@
+export const DEFAULT_BOARD_SIZE = 3;
+export const DEFAULT_WINNING_LINE_LENGTH = 3;
