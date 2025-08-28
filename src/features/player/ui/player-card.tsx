@@ -5,15 +5,15 @@ import { GameSymbolIcon } from '@/entities/game';
 
 const PlayerCard = ({ player }: { player: PlayerState }) => {
   return (
-    <Card className="w-full sm:max-w-3xs">
-      <CardHeader className="flex flex-row justify-center font-bold text-xl">
+    <Card className="flex justify-center items-center w-full sm:max-w-3xs p-2 divide-x-1 divide-grey-500">
+      <CardHeader className="flex flex-col items-start p-4">
         <div className="flex items-end gap-2">
-          <p className="text-xl font-bold leading-none">Player</p>
+          <p className="text-lg font-bold leading-none">Player</p>
           <GameSymbolIcon symbol={player.symbol} className="w-4 h-4" />
         </div>
-      </CardHeader>
-      <CardContent>
         <p>Score: {player.score}</p>
+      </CardHeader>
+      <CardContent className="p-4">
         <Timer totalSeconds={player.timeInGame} />
       </CardContent>
     </Card>
