@@ -6,7 +6,6 @@ interface GamePageLayoutProps {
   nextMoveIcon: ReactElement;
   gameTimer: ReactElement;
   gameBoard: ReactElement;
-  toggleSizeButton: ReactElement;
   newGameButton: ReactElement;
   selectSize: ReactElement;
   playedGamesCount: number;
@@ -17,18 +16,17 @@ const GamePageLayout = ({
   nextMoveIcon,
   gameTimer,
   gameBoard,
-  toggleSizeButton,
   newGameButton,
   selectSize,
   playedGamesCount,
 }: GamePageLayoutProps) => {
   return (
-    <div className="flex flex-col gap-4 max-w-xl mx-auto">
+    <div className="flex flex-col gap-6 max-w-xl mx-auto">
       <header>
         <h1 className="text-4xl font-bold text-start mb-2">Tic Tac Toe</h1>
         <p className="text-xl font-bold text-start">Games played: {playedGamesCount}</p>
       </header>
-      <main className="flex flex-col gap-4">
+      <main className="flex flex-col gap-6">
         <div className="flex flex-col sm:flex-row justify-between gap-4">{playerCards}</div>
         <Card className="flex flex-col items-center justify-center gap-8 p-4">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4 w-full">
@@ -46,7 +44,6 @@ const GamePageLayout = ({
           </div>
           {gameBoard}
         </Card>
-        {toggleSizeButton}
       </main>
     </div>
   );
