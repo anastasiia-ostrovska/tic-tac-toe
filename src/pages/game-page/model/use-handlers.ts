@@ -2,6 +2,7 @@ import { type Dispatch, type SetStateAction, useCallback } from 'react';
 import {
   calculateWinner,
   type GameBoardSize,
+  type GameBoardSizeState,
   type GameState,
   generateInitialCells,
 } from '@/entities/game';
@@ -63,20 +64,27 @@ export const useCellClickHandler = ({
 };
 
 interface UseNewGameClickHandlerParams {
-  boardSize: GameBoardSize;
+  selectedBoardSize: GameBoardSize;
+  setBoardSize: Dispatch<SetStateAction<GameBoardSizeState>>;
   setGameState: Dispatch<SetStateAction<GameState>>;
   setPlayersState: Dispatch<SetStateAction<Players>>;
 }
 
 export const useNewGameClickHandler = ({
-  boardSize,
+  selectedBoardSize,
+  setBoardSize,
   setGameState,
   setPlayersState,
 }: UseNewGameClickHandlerParams) => {
   const handleNewGameClick = () => {
+    setBoardSize(prevState => ({
+      ...prevState,
+      current: selectedBoardSize,
+    }));
+
     setGameState(prevState => ({
       ...prevState,
-      cells: generateInitialCells(boardSize),
+      cells: generateInitialCells(selectedBoardSize),
       currentPlayer: 'x',
       currentGameTime: 0,
       winner: null,

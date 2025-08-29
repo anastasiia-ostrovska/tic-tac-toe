@@ -12,6 +12,7 @@ const GamePage = () => {
     gameState: { cells, totalGames, currentGameTime, currentPlayer, winner },
     playersState,
     boardSize,
+    setBoardSize,
     handleCellClick,
     handleNewGameClick,
   } = useGame();
@@ -27,9 +28,9 @@ const GamePage = () => {
         }
         nextMoveIcon={<GameSymbolIcon symbol={currentPlayer} className="w-4 h-4" />}
         gameTimer={<Timer totalSeconds={currentGameTime} />}
-        gameBoard={<GameBoard cells={cells} onClick={handleCellClick} size={boardSize} />}
+        gameBoard={<GameBoard cells={cells} onClick={handleCellClick} size={boardSize.current} />}
         newGameButton={<Button onClick={handleNewGameClick}>New Game</Button>}
-        selectSize={<SelectBoardSize />}
+        selectSize={<SelectBoardSize size={boardSize.selected} setSize={setBoardSize} />}
         playedGamesCount={totalGames}
       />
       <GameOverDialog winner={winner} />

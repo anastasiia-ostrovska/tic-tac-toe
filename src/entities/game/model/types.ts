@@ -15,3 +15,8 @@ export interface GameState {
   winner: Winner;
   totalGames: number;
 }
+
+export interface GameBoardSizeState {
+  selected: GameBoardSize;
+  current: GameBoardSize;
+}
