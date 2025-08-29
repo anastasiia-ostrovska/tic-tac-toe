@@ -33,7 +33,7 @@ const GamePage = () => {
         selectSize={<SelectBoardSize size={boardSize.selected} setSize={setBoardSize} />}
         playedGamesCount={totalGames}
       />
-      <GameOverDialog winner={winner} />
+      <GameOverDialog winner={winner} players={playersState} gameTime={currentGameTime} />
     </>
   );
 };

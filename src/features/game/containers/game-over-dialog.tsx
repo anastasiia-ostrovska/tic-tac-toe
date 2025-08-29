@@ -9,6 +9,8 @@ import {
 } from '@/shared/ui/dialog';
 import { GameSymbolIcon, type Winner } from '@/entities/game';
 import { Button } from '@/shared/ui/button';
+import { Timer } from '@/shared/ui/timer';
+import type { Players } from '@/pages/game-page/model/types';
 
 const gaveOverDialogMessages = {
   ['draw']: { title: 'Game ends in a draw 🤝', message: 'You are welcome to try again!' },
@@ -24,7 +26,13 @@ const gaveOverDialogMessages = {
   },
 };
 
-const GameOverDialog = ({ winner }: { winner: Winner }) => {
+interface GameOverDialogProps {
+  winner: Winner;
+  gameTime: number;
+  players: Players;
+}
+
+const GameOverDialog = ({ winner, gameTime, players }: GameOverDialogProps) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
@@ -45,9 +53,23 @@ const GameOverDialog = ({ winner }: { winner: Winner }) => {
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
       <DialogContent className="w-fit">
         <DialogTitle className="text-2xl">{gaveOverDialogMessages[winner].title}</DialogTitle>
-        <DialogDescription className="flex gap-2 mb-3 text-lg leading-none">
-          {winner !== 'draw' && gaveOverDialogMessages[winner].icon}
-          {gaveOverDialogMessages[winner].message}
+        <DialogDescription className="flex flex-col gap-2 mb-3 text-lg leading-none">
+          <div className="flex gap-2 items-center mb-1">
+            {winner !== 'draw' && gaveOverDialogMessages[winner].icon}
+            {gaveOverDialogMessages[winner].message}
+          </div>
+          {winner === 'draw' && (
+            <div className="flex gap-2 font-bold">
+              <span className="font-normal">Game Time: </span>
+              <Timer totalSeconds={gameTime} />
+            </div>
+          )}
+          {winner !== 'draw' && (
+            <div className="flex gap-2 font-bold">
+              <span className="font-normal">Your Time: </span>{' '}
+              <Timer totalSeconds={players[winner].timeInGame} />
+            </div>
+          )}
         </DialogDescription>
         <DialogFooter>
           <DialogClose asChild className="cursor-pointer">
