@@ -1,14 +1,18 @@
 import { useState } from 'react';
-import { DEFAULT_BOARD_SIZE, type GameBoardSize, type GameState } from '@/entities/game';
-import { getInitialGameState, initialPlayersState } from '../configs/initial-state';
+import type { GameBoardSizeState, GameState } from '@/entities/game';
+import {
+  getInitialGameState,
+  initialBoardSizeState,
+  initialPlayersState,
+} from '../configs/initial-state';
 import type { Players } from './types';
 import { useGameTimer, usePlayersTimers } from './use-timers';
 import { useCellClickHandler, useNewGameClickHandler } from './use-handlers';
 
 export const useGame = () => {
   // States
-  const [boardSize] = useState<GameBoardSize>(DEFAULT_BOARD_SIZE);
-  const [gameState, setGameState] = useState<GameState>(getInitialGameState(boardSize));
+  const [boardSize, setBoardSize] = useState<GameBoardSizeState>(initialBoardSizeState);
+  const [gameState, setGameState] = useState<GameState>(getInitialGameState(boardSize.current));
   const [playersState, setPlayersState] = useState<Players>(initialPlayersState);
 
   // Timers
@@ -26,20 +30,22 @@ export const useGame = () => {
   const { handleCellClick } = useCellClickHandler({
     setGameState,
     setPlayersState,
-    boardSize,
+    boardSize: boardSize.current,
     gameState,
   });
 
   const { handleNewGameClick } = useNewGameClickHandler({
     setGameState,
     setPlayersState,
-    boardSize,
+    selectedBoardSize: boardSize.selected,
+    setBoardSize,
   });
 
   return {
     gameState,
     playersState,
     boardSize,
+    setBoardSize,
     handleCellClick,
     handleNewGameClick,
   };
